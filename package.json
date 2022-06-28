@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "build": "rollup -c" ,
+    "start": "npm start"
+  },
+  "devDependencies": {
+    "rollup": "latest",
+    "@rollup/plugin-buble": "latest"
+  }
+}
