@@ -15,10 +15,10 @@ const run = async () => {
   const marks = viz
     .data(await getData())
     .width(window.innerWidth)
-    .height(window.innerHeight)
+    .height(300)
     .autosize({ type: 'fit', contains: 'padding' })
     .config(config);
     
-  document.getElementById("op").appendChild(await marks.render());
+  document.body.appendChild(await marks.render()); 
 };
 run();

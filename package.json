@@ -1,7 +1,8 @@
 {
   "scripts": {
     "build": "rollup -c" ,
-    "start": "npm start"
+    "start": "rollup index.js --format iife --file bundle.js",
+    "rollup": "rollup" 
   },
   "devDependencies": {
     "rollup": "latest",
