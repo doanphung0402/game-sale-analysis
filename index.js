@@ -18,7 +18,7 @@ const run = async () => {
     .height(window.innerHeight)
     .autosize({ type: 'fit', contains: 'padding' })
     .config(config);
-  
-  document.body.appendChild(await marks.render());
+    
+  document.getElementById("op").appendChild(await marks.render());
 };
 run();
