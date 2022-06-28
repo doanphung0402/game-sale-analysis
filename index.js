@@ -4,7 +4,7 @@ import vl from 'vega-lite-api';
 import { Handler } from 'vega-tooltip';
 import { config } from './config';
 import { getData } from './getData';
-import { viz } from './viz';
+import { viz } from './vizTotal/viz';
 
 vl.register(vega, vegaLite, {
   view: { renderer: 'svg' },

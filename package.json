@@ -1,11 +1,14 @@
 {
   "scripts": {
-    "build": "rollup -c" ,
+    "build": "rollup -c",
     "start": "rollup index.js --format iife --file bundle.js",
-    "rollup": "rollup" 
+    "rollup": "rollup"
   },
   "devDependencies": {
-    "rollup": "latest",
-    "@rollup/plugin-buble": "latest"
+    "@rollup/plugin-buble": "latest",
+    "rollup": "latest"
+  },
+  "dependencies": {
+    "firebase": "^9.8.4"
   }
 }

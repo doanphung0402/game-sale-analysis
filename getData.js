@@ -1,6 +1,6 @@
 import { csv } from 'd3';
 
-const csvUrl = 'https://gist.githubusercontent.com/evarun22/39d2fdb26f358c0171aa87b989b4d816/raw/e52963e5791313311781b8e42e4623280d6d1754/vgsales.csv';
+const csvUrl = 'https://gist.githubusercontent.com/doanphung0402/a4e494863b30f45d7381cc9bed4f6b8b/raw/2a2c3d94c182c791d3cf5fb906bfdd25013301a8/game-sale-analysis-data';
 
 export const getData = async () => {
   const data = await csv(csvUrl);
