@@ -5,20 +5,25 @@ import { Handler } from 'vega-tooltip';
 import { config } from './config';
 import { getData } from './getData';
 import { viz } from './vizTotal/viz';
-
+import {SalePerYear} from "./vizTotal/phung/SalePerYear";
 vl.register(vega, vegaLite, {
   view: { renderer: 'svg' },
   init: view => { view.tooltip(new Handler().call); }
 });
 
-const run = async () => {
-  const marks = viz
-    .data(await getData())
-    .width(window.innerWidth)
-    .height(300)
-    .autosize({ type: 'fit', contains: 'padding' })
-    .config(config);
+// const run = async () => {
+//   const marks = viz
+//     .data(await getData())
+//     .width(window.innerWidth)
+//     .height(300)
+//     .autosize({ type: 'fit', contains: 'padding' })
+//     .config(config);
     
-  document.body.appendChild(await marks.render()); 
-};
-run();
+//   document.body.appendChild(await marks.render()); 
+  
+// };
+
+
+
+
+// run();
