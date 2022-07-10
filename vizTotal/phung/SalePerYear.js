@@ -19,7 +19,6 @@ const totalOtherSales = async()=>{
         })
         
     }
-    console.log("🚀 ~ file: growthCategory.js ~ line 9 ~ totalOtherSales ~ newData", newData)
     return newData ; 
    
 
@@ -42,11 +41,11 @@ const run = async () => {
       .data(data)
     //   .width(window.innerWidth)
       .width(1000)
-      .height(500)
+      .height(300)
       .autosize({ type: 'fit', contains: 'padding' })
       .config(config);
-
-    document.body.appendChild(await marks.render()); 
+    const d =document.getElementById("saleperyear"); 
+    d.replaceWith(await marks.render(),d); 
   };
     
   run(); 

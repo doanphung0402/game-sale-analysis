@@ -5,7 +5,15 @@ import { Handler } from 'vega-tooltip';
 import { config } from './config';
 import { getData } from './getData';
 import { viz } from './vizTotal/viz';
-import {SalePerYear} from "./vizTotal/phung/SalePerYear";
+
+//doanh thu game qua cac nam 
+import {SalePerYear} from "./vizTotal/phung/SalePerYear";  
+
+// danh thu qua cac nam cua top 5 nhà phát hành có doanh số cao nhất 
+import {PublisherSale} from '././vizTotal/phung//PublisherSale';
+
+
+
 vl.register(vega, vegaLite, {
   view: { renderer: 'svg' },
   init: view => { view.tooltip(new Handler().call); }
