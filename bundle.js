@@ -28,7 +28,7 @@
   };
 
   // const csvUrl = 'https://gist.githubusercontent.com/evarun22/39d2fdb26f358c0171aa87b989b4d816/raw/e52963e5791313311781b8e42e4623280d6d1754/vgsales.csv';
-   const csvUrl ='https://gist.githubusercontent.com/doanphung0402/42b93451cd07d87ba113961b44b7d13f/raw/2a61721575390fea355f03c35564aa00e991bb94/game-sale-analysis-data.csv'; 
+   const csvUrl ='https://gist.githubusercontent.com/doanphung0402/42b93451cd07d87ba113961b44b7d13f/raw/33795356a4b012bfb118e1b3e703dc0aa4707c07/game-sale-analysis-data.csv'; 
 
   const getData = async () => {
     const data = await d3.csv(csvUrl);
@@ -86,7 +86,7 @@
       vl__default["default"].tooltip(['Global_Sales'])
     );
     // export const SalePerYear = vl
-  const run$4 = async () => {
+  const run$5 = async () => {
       const data  = await totalOtherSales(); 
       const marksLine  = SalePerYearLine
         .data(data)
@@ -107,7 +107,7 @@
       d.replaceWith(await vl__default["default"].layer(marksLine, marksPoint).render(),d); 
     };
       
-    run$4();
+    run$5();
 
   const formatGlobalSale = (Global_Sales) =>{ 
       const pos = Global_Sales.indexOf("\t"); 
@@ -155,7 +155,7 @@
           }else {
                PublisherSale.push({
                     "Publisher" : data1.Publisher, 
-                    "Global_Sales":formatGlobalSale(data1.Global_Sales)
+                    "Global_Sales":parseFloat(formatGlobalSale(data1.Global_Sales)).toFixed(2) 
                }); 
 
           }
@@ -178,6 +178,8 @@
                 Number(data1.Global_Sales)).toString(); 
           }else {
                PublisherSale.push({
+                     "EU_Sales" : data1.EU_Sales, 
+                     "JP_Sales" : data1.JP_Sales, 
                     "Publisher" : data1.Publisher, 
                     "Global_Sales": formatGlobalSale(data1.Global_Sales), 
                     "Year" : data1.Year
@@ -211,7 +213,7 @@
       vl__default["default"].tooltip(['Publisher'])
     );
     
-  const run$3 = async () => {
+  const run$4 = async () => {
       const data  = await topPublisherBestSaleGlobalPerYear(5);
       const marks = PublisherSale
         .data(data)
@@ -226,7 +228,7 @@
       d.replaceWith(await marks.render(),d); 
     };
       
-    run$3();
+    run$4();
 
   const gameLaunchedPerYear = async() =>{
        const data = await getData(); 
@@ -258,7 +260,7 @@
       vl__default["default"].y().fieldQ('number_game').scale({ zero: false }), 
       vl__default["default"].tooltip(['number_game'])
      );
-  const run$2 = async () => {
+  const run$3 = async () => {
       const data  = await gameLaunchedPerYear();
       const marksLine  = gameLaunchedPerYearLine
         .data(data)
@@ -279,7 +281,7 @@
       d.replaceWith(await vl__default["default"].layer(marksLine,markPoint).render(),d); 
     };
       
-    run$2();
+    run$3();
 
   const getSaleJapanPerYear = async()=> { 
        const data =await getData();
@@ -332,7 +334,7 @@
       vl__default["default"].x().fieldT('Year').scale({ zero: false }).title(null),
       vl__default["default"].y().fieldQ('Sale').scale({ zero: false }).title("EU_Sales")
      ); 
-  const run$1 = async () => { 
+  const run$2 = async () => { 
       const dataJp  = await getSaleJapanPerYear(); 
       const dataEu = await getSaleEuPerYear();
     
@@ -359,7 +361,7 @@
       d.replaceWith(await vl__default["default"].hconcat(marksJp,markEu).render(),d); 
     };
       
-    run$1();
+    run$2();
 
   const findPlatform =(flatformName,flatformArr,Year) =>{
       let pos =-1;  
@@ -445,7 +447,7 @@
       vl__default["default"].tooltip(["Platform_name"])
     );
     
-  const run = async () => {
+  const run$1 = async () => {
 
       const data1  = await getNumberGameOfPlatformPerYear(); 
       console.log("🚀 ~ file: gameOfPlatformPerYear.js ~ line 88 ~ run ~ data1", data1);
@@ -466,6 +468,72 @@
       
       let d = document.getElementById("gameOfPlatformPerYear"); 
       d.replaceWith(await marks.render(),d); 
+    };
+      
+    run$1();
+
+  // const findPf = (Year,SaleGameInDSArr) =>{
+  //      let pos = -1 ; 
+  //      if(SaleGameInDSArr.length ==0){
+  //          return pos ; 
+  //      }else{
+  //         SaleGameInDSArr.forEach((item,index) => {
+  //             if(item.Year == Year){
+  //                  pos = index; 
+  //             }
+  //         });
+  //      }
+  //     return pos ; 
+  // }
+  const SaleGameNitendo  = vl__default["default"]
+    .markLine()
+    .encode(
+      vl__default["default"].x().fieldT('Year').scale({ zero: false }).title(null),
+      vl__default["default"].y().fieldQ('Global_Sales').scale({ zero: false })
+    );
+    const SaleJpNitendo = vl__default["default"]
+    .markLine()
+    .encode(
+      vl__default["default"].x().fieldT('Year').scale({ zero: false }).title(null),
+      vl__default["default"].y().fieldQ('JP_Sales').scale({ zero: false })
+    );
+    const SaleEuNitendo = vl__default["default"]
+    .markLine()
+    .encode(
+      vl__default["default"].x().fieldT('Year').scale({ zero: false }).title(null),
+      vl__default["default"].y().fieldQ('EU_Sales').scale({ zero: false })
+    );
+  const run = async () => {
+      const data  = await topPublisherBestSaleGlobalPerYear(1);
+      console.log("🚀 ~ file: SaleGameNitendo.js ~ line 28 ~ run ~ data", data);
+      const marksSaleEu = SaleEuNitendo
+      .data(data)
+      // .width(window.innerWidth)
+      
+      .width(300)
+      .height(200)
+      .autosize({ type: 'fit', contains: 'padding' })
+      .config(config);
+
+      const marksSaleJp = SaleJpNitendo
+      .data(data)
+      // .width(window.innerWidth)
+      
+      .width(300)
+      .height(200)
+      .autosize({ type: 'fit', contains: 'padding' })
+      .config(config);
+      const marksSaleGlobal = SaleGameNitendo
+        .data(data)
+        // .width(window.innerWidth)
+        
+        .width(300)
+        .height(200)
+        .autosize({ type: 'fit', contains: 'padding' })
+        .config(config);
+      
+      let d = document.getElementById("SaleGameNitendo"); 
+      d.replaceWith(await vl__default["default"].hconcat(marksSaleGlobal,marksSaleEu,marksSaleJp).render(),d); 
     };
       
     run();

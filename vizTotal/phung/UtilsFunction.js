@@ -1,6 +1,6 @@
 import { getData } from "../../getData";
 
-const formatGlobalSale = (Global_Sales) =>{ 
+export const formatGlobalSale = (Global_Sales) =>{ 
     const pos = Global_Sales.indexOf("\t"); 
     if(pos==-1){
          return Global_Sales; 
@@ -46,7 +46,7 @@ export const totalPublisherGlobalSale = async() =>{
         }else {
              PublisherSale.push({
                   "Publisher" : data1.Publisher, 
-                  "Global_Sales":formatGlobalSale(data1.Global_Sales)
+                  "Global_Sales":parseFloat(formatGlobalSale(data1.Global_Sales)).toFixed(2) 
              }); 
 
         }
@@ -69,6 +69,8 @@ export const totalGlobalSalesPublisherPerYear = async()=>{
               Number(data1.Global_Sales)).toString(); 
         }else {
              PublisherSale.push({
+                   "EU_Sales" : data1.EU_Sales, 
+                   "JP_Sales" : data1.JP_Sales, 
                   "Publisher" : data1.Publisher, 
                   "Global_Sales": formatGlobalSale(data1.Global_Sales), 
                   "Year" : data1.Year

@@ -22,6 +22,10 @@ import {SaleJapanPerYear} from './vizTotal/phung/SaleAreaPerYear'
 //số game được chơi trên flatform qua các năm 
 import {gameOfPlatformPerYear} from '././vizTotal/phung/gameOfPlatformPerYear'
 
+
+//doanh thu global_sale của DS 
+import {SaleGameNitendo} from './vizTotal/phung/SaleGameNitendo'
+
 vl.register(vega, vegaLite, {
   view: { renderer: 'svg' },
   init: view => { view.tooltip(new Handler().call); }
