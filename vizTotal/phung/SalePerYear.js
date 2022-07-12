@@ -15,7 +15,7 @@ const totalOtherSales = async()=>{
         })
         newData.push({
              "Year" : k.toString() , 
-             "Global_Sales" : globalSale.toString() 
+             "Global_Sales" : parseFloat(globalSale.toString()).toFixed(2) 
         })
         
     }
@@ -25,27 +25,42 @@ const totalOtherSales = async()=>{
 }
 
 
-export const SalePerYear = vl
+export const SalePerYearLine = vl
   .markLine()
   .encode(
-    vl.x().fieldT('Year').scale({ zero: false} ),
+    vl.x().fieldT('Year').scale({ zero: false}).title(null),
     vl.y().fieldQ('Global_Sales').scale({ zero: false })
 
     // vl.color().fieldQ('Global_Sales').scale({zero :false})
     // vl.tooltip().fieldN('Genre')
   );
-  
+export const SalePerYearPoint = vl 
+  .markPoint()
+  .encode(
+    vl.x().fieldT('Year').scale({ zero: false} ),
+    vl.y().fieldQ('Global_Sales').scale({ zero: false }), 
+    vl.tooltip(['Global_Sales'])
+  )
+  // export const SalePerYear = vl
 const run = async () => {
     const data  = await totalOtherSales(); 
-    const marks = SalePerYear
+    const marksLine  = SalePerYearLine
       .data(data)
     //   .width(window.innerWidth)
       .width(1000)
       .height(300)
       .autosize({ type: 'fit', contains: 'padding' })
       .config(config);
+
+    const marksPoint = SalePerYearPoint
+       .data(data)
+       .width(1000)
+       .height(300)
+       .autosize({ type: 'fit', contains: 'padding' })
+       .config(config);
+
     const d =document.getElementById("saleperyear"); 
-    d.replaceWith(await marks.render(),d); 
+    d.replaceWith(await vl.layer(marksLine, marksPoint).render(),d); 
   };
     
   run(); 

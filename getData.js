@@ -5,9 +5,8 @@ import { csv } from 'd3';
 
 export const getData = async () => {
   const data = await csv(csvUrl);
+  console.log("🚀 ~ file: getData.js ~ line 8 ~ getData ~ data", data[0])
   
   // Have a look at the attributes available in the console!
-  console.log(data[0]);
-
   return data;
 };

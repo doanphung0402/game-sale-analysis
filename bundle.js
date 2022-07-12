@@ -32,10 +32,9 @@
 
   const getData = async () => {
     const data = await d3.csv(csvUrl);
+    console.log("🚀 ~ file: getData.js ~ line 8 ~ getData ~ data", data[0]);
     
     // Have a look at the attributes available in the console!
-    console.log(data[0]);
-
     return data;
   };
 
@@ -60,7 +59,7 @@
           });
           newData.push({
                "Year" : k.toString() , 
-               "Global_Sales" : globalSale.toString() 
+               "Global_Sales" : parseFloat(globalSale.toString()).toFixed(2) 
           });
           
       }
@@ -70,30 +69,45 @@
   };
 
 
-  const SalePerYear = vl__default["default"]
+  const SalePerYearLine = vl__default["default"]
     .markLine()
     .encode(
-      vl__default["default"].x().fieldT('Year').scale({ zero: false} ),
+      vl__default["default"].x().fieldT('Year').scale({ zero: false}).title(null),
       vl__default["default"].y().fieldQ('Global_Sales').scale({ zero: false })
 
       // vl.color().fieldQ('Global_Sales').scale({zero :false})
       // vl.tooltip().fieldN('Genre')
     );
-    
-  const run$1 = async () => {
+  const SalePerYearPoint = vl__default["default"] 
+    .markPoint()
+    .encode(
+      vl__default["default"].x().fieldT('Year').scale({ zero: false} ),
+      vl__default["default"].y().fieldQ('Global_Sales').scale({ zero: false }), 
+      vl__default["default"].tooltip(['Global_Sales'])
+    );
+    // export const SalePerYear = vl
+  const run$4 = async () => {
       const data  = await totalOtherSales(); 
-      const marks = SalePerYear
+      const marksLine  = SalePerYearLine
         .data(data)
       //   .width(window.innerWidth)
         .width(1000)
         .height(300)
         .autosize({ type: 'fit', contains: 'padding' })
         .config(config);
+
+      const marksPoint = SalePerYearPoint
+         .data(data)
+         .width(1000)
+         .height(300)
+         .autosize({ type: 'fit', contains: 'padding' })
+         .config(config);
+
       const d =document.getElementById("saleperyear"); 
-      d.replaceWith(await marks.render(),d); 
+      d.replaceWith(await vl__default["default"].layer(marksLine, marksPoint).render(),d); 
     };
       
-    run$1();
+    run$4();
 
   const formatGlobalSale = (Global_Sales) =>{ 
       const pos = Global_Sales.indexOf("\t"); 
@@ -191,15 +205,14 @@
   const PublisherSale  = vl__default["default"]
     .markLine()
     .encode(
-      vl__default["default"].x().fieldT('Year'),
+      vl__default["default"].x().fieldT('Year').scale({ zero: false }).title(null),
       vl__default["default"].y().fieldQ('Global_Sales').scale({ zero: false }), 
       vl__default["default"].color().fieldN('Publisher'), 
-      vl__default["default"].tooltip().fieldN('Publisher','Global_Sales')
+      vl__default["default"].tooltip(['Publisher'])
     );
     
-  const run = async () => {
+  const run$3 = async () => {
       const data  = await topPublisherBestSaleGlobalPerYear(5);
-      console.log("🚀 ~ file: PublisherSale.js ~ line 18 ~ run ~ data", data);
       const marks = PublisherSale
         .data(data)
         // .width(window.innerWidth)
@@ -211,7 +224,248 @@
       
       let d = document.getElementById("top5saleperyear"); 
       d.replaceWith(await marks.render(),d); 
-      // document.body.appendChild(await marks.render()); 
+    };
+      
+    run$3();
+
+  const gameLaunchedPerYear = async() =>{
+       const data = await getData(); 
+       let gameLaunched = []; 
+       for(let k =1980 ;k<2021;k++){
+         let numberGame = 0; 
+         data.forEach(item=>{
+               if(item.Year == k){
+                  numberGame++; 
+               } 
+           });
+           gameLaunched.push({
+              "Year" : k.toString(), 
+              "number_game" : numberGame.toString()
+          });
+       }
+       return gameLaunched; 
+  };
+  const gameLaunchedPerYearLine  = vl__default["default"]
+    .markLine()
+    .encode(
+      vl__default["default"].x().fieldT('Year').scale({ zero: false }).title(null),
+      vl__default["default"].y().fieldQ('number_game').scale({ zero: false }), 
+    );
+  const gameLaunchedPerYearPoint = vl__default["default"]
+     .markPoint()
+     .encode(
+      vl__default["default"].x().fieldT('Year').scale({ zero: false }).title(null),
+      vl__default["default"].y().fieldQ('number_game').scale({ zero: false }), 
+      vl__default["default"].tooltip(['number_game'])
+     );
+  const run$2 = async () => {
+      const data  = await gameLaunchedPerYear();
+      const marksLine  = gameLaunchedPerYearLine
+        .data(data)
+        // .width(window.innerWidth)
+        
+        .width(1000)
+        .height(300)
+        .autosize({ type: 'fit', contains: 'padding' })
+        .config(config);
+      const markPoint = gameLaunchedPerYearPoint
+         .data(data)
+         .width(1000)
+         .height(300)
+         .autosize({ type: 'fit', contains: 'padding' })
+         .config(config);
+
+      let d = document.getElementById("gameLaunchedPerYear"); 
+      d.replaceWith(await vl__default["default"].layer(marksLine,markPoint).render(),d); 
+    };
+      
+    run$2();
+
+  const getSaleJapanPerYear = async()=> { 
+       const data =await getData();
+       let saleGameJp = []; 
+      for (let k =1983;k<2018;k++){
+          let totalSaleInYear = 0; 
+          data.forEach(item => {
+               if(item.Year == k){
+                   totalSaleInYear += Number(item.JP_Sales); 
+               }
+          });
+          saleGameJp.push({
+               'Year' : k.toString(), 
+               'Sale' : totalSaleInYear.toString()
+          });
+         
+      }
+      return saleGameJp ; 
+        
+      };
+      const getSaleEuPerYear = async()=> { 
+        const data =await getData();
+        let saleGameEu = []; 
+       for (let k =1983;k<2018;k++){
+           let totalSaleInYear = 0; 
+           data.forEach(item => {
+                if(item.Year == k){
+                    totalSaleInYear += Number(item.EU_Sales); 
+                }
+           });
+           saleGameEu.push({
+                'Year' : k.toString(), 
+                'Sale' : totalSaleInYear.toString()
+           });
+          
+       }
+       return saleGameEu ;
+       };
+
+  const SaleJapanPerYear = vl__default["default"]
+    .markLine()
+    .encode(
+      vl__default["default"].x().fieldT('Year').scale({ zero: false }).title(null),
+      vl__default["default"].y().fieldQ('Sale').scale({ zero: false }).title("Japan_Sales")
+    );
+
+  const SaleEUPerYear = vl__default["default"]
+    .markLine()
+     .encode(
+      vl__default["default"].x().fieldT('Year').scale({ zero: false }).title(null),
+      vl__default["default"].y().fieldQ('Sale').scale({ zero: false }).title("EU_Sales")
+     ); 
+  const run$1 = async () => { 
+      const dataJp  = await getSaleJapanPerYear(); 
+      const dataEu = await getSaleEuPerYear();
+    
+      const marksJp = SaleJapanPerYear
+      .data(dataJp)
+        // .width(window.innerWidth)
+        
+        .width(600)
+        .height(300)
+        .autosize({ type: 'fit', contains: 'padding' })
+        .config(config);
+      
+        const markEu = SaleEUPerYear
+        .data(dataEu)
+          // .width(window.innerWidth)
+          
+          .width(600)
+          .height(300)
+          .autosize({ type: 'fit', contains: 'padding' })
+          .config(config);
+
+
+      let d = document.getElementById("SaleJapanPerYear"); 
+      d.replaceWith(await vl__default["default"].hconcat(marksJp,markEu).render(),d); 
+    };
+      
+    run$1();
+
+  const findPlatform =(flatformName,flatformArr,Year) =>{
+      let pos =-1;  
+      if(flatformArr.length == 0){
+           return pos ; 
+      }
+       flatformArr.forEach((flatform,index)=>{
+          if(flatform.Platform_name == flatformName && flatform.Year == Year ){
+               pos = index ; 
+          }
+       });
+       return pos ; 
+  };
+  const getNumberGameOfPlatformPerYear =async()=>{
+       const data =await getData(); 
+       let numberGameofPlatformPerYear=[]; 
+       for (let k= 1980; k<2020;k++){
+           data.forEach(item=>{
+              let pos = findPlatform(item.Platform,numberGameofPlatformPerYear,item.Year); 
+               if(pos == -1 ){
+                   numberGameofPlatformPerYear.push({
+                       'Year' : item.Year, 
+                       'Platform_name' : item.Platform , 
+                       'number_game' : 1
+                   });
+               }else {
+                  let number_game =Number(numberGameofPlatformPerYear[pos].number_game) + 1; 
+                   numberGameofPlatformPerYear[pos] = {
+                       ...numberGameofPlatformPerYear[pos], 
+                       "number_game" : number_game.toString()
+                   };
+               }
+           });
+       }
+       return numberGameofPlatformPerYear ; 
+  };
+
+  const findFlatform1 = (PlatformName , PlatformArr)=>{
+    let pos =-1 ; 
+     if(PlatformArr.length ==0){
+       return pos; 
+     }else {
+       PlatformArr.forEach((item,index)=>{
+         if(item.Platform_name==PlatformName){
+            pos = index ; 
+         }
+       });
+     }
+     return pos ; 
+  };
+  const numberGameOf5Platform =(data)=>{
+      let numberGameOf5Platform = []; 
+      data.forEach((item,index) =>{
+        let pos = findFlatform1(item.Platform_name,numberGameOf5Platform) ; 
+         if(pos ==-1){
+           numberGameOf5Platform.push({
+             'Platform_name' : item.Platform_name , 
+             'number_game' : item.number_game 
+           });
+         }else {
+          let number_game =  Number(numberGameOf5Platform[pos].number_game) + Number(item.number_game); 
+           numberGameOf5Platform[pos] = {
+             ...numberGameOf5Platform[pos], 
+             'number_game' : number_game.toString(), 
+           };
+         }
+      });
+      return numberGameOf5Platform.sort((a,b)=>{
+         return  Number(b.number_game) - Number(a.number_game); 
+      }).slice(0,5).map(item=>{
+         return item.Platform_name; 
+      }); 
+  };
+
+
+  const gameOfPlatformPerYear  = vl__default["default"]
+    .markLine()
+    .encode(
+      vl__default["default"].x().fieldT('Year').scale({ zero: false }).title(null),
+      vl__default["default"].y().fieldQ('number_game').scale({ zero: false }).title("game number"), 
+      vl__default["default"].color().fieldN('Platform_name').title("platform"), 
+      // vl.opacity().if(selection, vl.value(0.75)).value(0.05)
+      vl__default["default"].tooltip(["Platform_name"])
+    );
+    
+  const run = async () => {
+
+      const data1  = await getNumberGameOfPlatformPerYear(); 
+      console.log("🚀 ~ file: gameOfPlatformPerYear.js ~ line 88 ~ run ~ data1", data1);
+      const data2 =  numberGameOf5Platform(data1); 
+      console.log("🚀 ~ file: gameOfPlatformPerYear.js ~ line 60 ~ run ~ data", data2);
+      const data = data1.filter(item=>{
+          return data2.includes(item.Platform_name)
+      });
+      console.log("🚀 ~ file: gameOfPlatformPerYear.js ~ line 101 ~ run ~ data", data);
+      const marks = gameOfPlatformPerYear
+        .data(data)
+        // .width(window.innerWidth)
+        
+        .width(1200)
+        .height(500)
+        .autosize({ type: 'fit', contains: 'padding' })
+        .config(config);
+      
+      let d = document.getElementById("gameOfPlatformPerYear"); 
+      d.replaceWith(await marks.render(),d); 
     };
       
     run();

@@ -12,7 +12,15 @@ import {SalePerYear} from "./vizTotal/phung/SalePerYear";
 // danh thu qua cac nam cua top 5 nhà phát hành có doanh số cao nhất 
 import {PublisherSale} from '././vizTotal/phung//PublisherSale';
 
+//số lượng game qua các năm 
+import {gameLaunchedPerYearLine} from '././vizTotal/phung/GameLaunchedPerYear'
 
+//tổng doanh số jp qua các năm 
+import {SaleJapanPerYear} from './vizTotal/phung/SaleAreaPerYear'
+
+
+//số game được chơi trên flatform qua các năm 
+import {gameOfPlatformPerYear} from '././vizTotal/phung/gameOfPlatformPerYear'
 
 vl.register(vega, vegaLite, {
   view: { renderer: 'svg' },
