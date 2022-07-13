@@ -1,7 +1,7 @@
 import vl from 'vega-lite-api';
 import { config } from '../../config';
 import { getData } from '../../getData';
-
+import * as UtilsFunction from './UtilsFunction'
 const findGame =(genre,Year,genreGame)=>{ 
       let pos = -1 ; 
       if(genreGame.length ==0 ){
@@ -27,12 +27,15 @@ const genreGamePerYear = async()=>{
                  genreGame.push({
                      'Genre' : item.Genre, 
                      'Year' :item.Year, 
-                      'game_number' : '1'
+                     'game_number' : '1', 
+                     'Global_Sales': UtilsFunction.formatGlobalSale(item.Global_Sales)
                  })
             }else{
+              let Global_Sales =  Number(genreGame[pos].Global_Sales) + Number(UtilsFunction.formatGlobalSale(item.Global_Sales)); 
                  genreGame[pos] = {
                      ...genreGame[pos], 
-                        'game_number' : (Number(genreGame[pos].game_number)+1).toString()
+                        'game_number' : (Number(genreGame[pos].game_number)+1).toString(), 
+                        'Global_Sales' : Global_Sales.toString()
                  }
             }
         })
