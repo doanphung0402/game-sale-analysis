@@ -18,26 +18,29 @@ const findPlatform =(flatformName,flatformArr,Year) =>{
 const getNumberGameOfPlatformPerYear =async()=>{
      const data =await getData(); 
      let numberGameofPlatformPerYear=[]; 
-     for (let k= 1980; k<2020;k++){
+   
          data.forEach(item=>{
             let pos = findPlatform(item.Platform,numberGameofPlatformPerYear,item.Year); 
              if(pos == -1 ){
                  numberGameofPlatformPerYear.push({
-                     'Year' : item.Year, 
+                     'Year' :item.Year , 
                      'Platform_name' : item.Platform , 
-                     'number_game' : 1
+                     'number_game' : "1"
                  })
              }else{
-                let number_game =Number(numberGameofPlatformPerYear[pos].number_game) + 1; 
+
+                let number_game1 =Number(numberGameofPlatformPerYear[pos].number_game) + 1 ; 
                  numberGameofPlatformPerYear[pos] = {
-                     ...numberGameofPlatformPerYear[pos], 
-                     "number_game" : number_game.toString()
+                  'Year' : item.Year, 
+                  'Platform_name' : item.Platform , 
+                  'number_game' : number_game1.toString()
                  }
              }
          })
+         return numberGameofPlatformPerYear ; 
      }
-     return numberGameofPlatformPerYear ; 
-}
+   
+
 
 const findFlatform1 = (PlatformName , PlatformArr)=>{
   let pos =-1 ; 
@@ -90,13 +93,13 @@ export const gameOfPlatformPerYear  = vl
 const run = async () => {
 
     const data1  = await getNumberGameOfPlatformPerYear(); 
-    console.log("🚀 ~ file: gameOfPlatformPerYear.js ~ line 88 ~ run ~ data1", data1)
+    console.log("🚀 ~ file: gameOfPlatformPerYear.js ~ line 93 ~ run ~ data1", data1)
     const data2 =  numberGameOf5Platform(data1); 
-    console.log("🚀 ~ file: gameOfPlatformPerYear.js ~ line 60 ~ run ~ data", data2)
+    console.log("🚀 ~ file: gameOfPlatformPerYear.js ~ line 96 ~ run ~ data2", data2)
     const data = data1.filter(item=>{
         return data2.includes(item.Platform_name)
     })
-    console.log("🚀 ~ file: gameOfPlatformPerYear.js ~ line 101 ~ run ~ data", data)
+    console.log("🚀 ~ file: gameOfPlatformPerYear.js ~ line 100 ~ run ~ data", data)
     const marks = gameOfPlatformPerYear
       .data(data)
       // .width(window.innerWidth)

@@ -12,7 +12,7 @@ import {SalePerYear} from "./vizTotal/phung/SalePerYear";
 // danh thu qua cac nam cua top 5 nhà phát hành có doanh số cao nhất 
 import {PublisherSale} from '././vizTotal/phung//PublisherSale';
 
-//số lượng game qua các năm 
+// số lượng game qua các năm 
 import {gameLaunchedPerYearLine} from '././vizTotal/phung/GameLaunchedPerYear'
 
 //tổng doanh số jp qua các năm 
@@ -23,8 +23,19 @@ import {SaleJapanPerYear} from './vizTotal/phung/SaleAreaPerYear'
 import {gameOfPlatformPerYear} from '././vizTotal/phung/gameOfPlatformPerYear'
 
 
-//doanh thu global_sale của DS 
+//doanh thu global_sale của Nitendo 
 import {SaleGameNitendo} from './vizTotal/phung/SaleGameNitendo'
+
+
+// the loai game qua cac nam 
+import {genreGamePerYearLine} from './vizTotal/phung/GenreGamePerYear'
+
+//action game qua cac nam 
+import {actionGamePerYear} from './vizTotal/phung/ActionGamePerYear'
+
+
+// so luong game cua cac nha phat hanh 
+import {gameOfPublisherPerYearLine} from './vizTotal/phung/gameOfPublisherPerYear'
 
 vl.register(vega, vegaLite, {
   view: { renderer: 'svg' },
