@@ -4,14 +4,14 @@ import { getData } from '../../getData';
 import * as UtilsFunction from './UtilsFunction'
 
 
-const getSaleJapanPerYear = async()=> { 
+const getNASale = async()=> { 
      const data =await getData();
      let saleGameJp = []; 
     for (let k =1983;k<2018;k++){
         let totalSaleInYear = 0; 
         data.forEach(item => {
              if(item.Year == k){
-                 totalSaleInYear += Number(item.JP_Sales); 
+                 totalSaleInYear += Number(item.NA_Sales); 
              }
         })
         saleGameJp.push({
@@ -23,14 +23,14 @@ const getSaleJapanPerYear = async()=> {
     return saleGameJp ; 
       
     }
-    const getSaleEuPerYear = async()=> { 
+    const getOtherSalePerYear = async()=> { 
       const data =await getData();
       let saleGameEu = []; 
      for (let k =1983;k<2018;k++){
          let totalSaleInYear = 0; 
          data.forEach(item => {
               if(item.Year == k){
-                  totalSaleInYear += Number(item.EU_Sales); 
+                  totalSaleInYear += Number(item.Other_Sales); 
               }
          })
          saleGameEu.push({
@@ -42,25 +42,25 @@ const getSaleJapanPerYear = async()=> {
      return saleGameEu ;
      }
 
-export const SaleJapanPerYear = vl
+export const SaleNAPerYear = vl
   .markLine()
   .encode(
-    vl.x().fieldT('Year').scale({ zero: false }).title("Thị trường Nhật Bản"),
+    vl.x().fieldT('Year').scale({ zero: false }).title("Thị trường Bắc Mỹ "),
     vl.y().fieldQ('Sale').scale({ zero: false }).title("million dollar")
   )
 
-const SaleEUPerYear = vl
+const SaleOtherPerYear = vl
   .markLine()
    .encode(
-    vl.x().fieldT('Year').scale({ zero: false }).title("Thị trường Châu Âu"),
+    vl.x().fieldT('Year').scale({ zero: false }).title("Các thị trường khác "),
     vl.y().fieldQ('Sale').scale({ zero: false }).title("million dollar")
    ) 
 const run = async () => { 
-    const dataJp  = await getSaleJapanPerYear(); 
-    const dataEu = await getSaleEuPerYear()
+    const dataNA  = await getNASale(); 
+    const dataOther = await getOtherSalePerYear()
   
-    const marksJp = SaleJapanPerYear
-    .data(dataJp)
+    const marksNA = SaleNAPerYear
+    .data(dataNA)
       // .width(window.innerWidth)
       
       .width(600)
@@ -68,8 +68,8 @@ const run = async () => {
       .autosize({ type: 'fit', contains: 'padding' })
       .config(config);
     
-      const markEu = SaleEUPerYear
-      .data(dataEu)
+      const markOther = SaleOtherPerYear
+      .data(dataOther)
         // .width(window.innerWidth)
         
         .width(600)
@@ -78,8 +78,8 @@ const run = async () => {
         .config(config);
 
 
-    let d = document.getElementById("SaleJapanPerYear"); 
-    d.replaceWith(await vl.hconcat(marksJp,markEu).render(),d); 
+    let d = document.getElementById("SaleNaAndOtherPerYear"); 
+    d.replaceWith(await vl.hconcat(marksNA,markOther).render(),d); 
   };
     
   run(); 

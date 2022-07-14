@@ -37,6 +37,10 @@ import {actionGamePerYear} from './vizTotal/phung/ActionGamePerYear'
 // so luong game cua cac nha phat hanh 
 import {gameOfPublisherPerYearLine} from './vizTotal/phung/gameOfPublisherPerYear'
 
+
+//doanh thu NA và cac khu vực khác 
+import {SaleGameOtherArea} from './vizTotal/phung/SaleGameOtherAreaPerYear'
+
 vl.register(vega, vegaLite, {
   view: { renderer: 'svg' },
   init: view => { view.tooltip(new Handler().call); }

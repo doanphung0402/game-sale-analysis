@@ -51,8 +51,7 @@ export const ActionGamePerYearLine = vl
   .markLine()
   .encode(
     vl.x().fieldT('Year').scale({ zero: false}).title(null),
-    vl.y().fieldQ('game_number').scale({ zero: false }),
-    vl.color().fieldN('Genre'), 
+    vl.y().fieldQ('game_number').scale({ zero: false })
     // vl.color().fieGenreldQ('Global_Sales').scale({zero :false})
     // vl.tooltip().fieldN('Genre')
   );
@@ -63,29 +62,43 @@ export const ActionGamePerYearPoint = vl
     vl.y().fieldQ('game_number').scale({ zero: false }), 
     vl.tooltip(['game_number'])
   )
+  const ActionGameSaleGlobal = vl
+    .markLine()
+    .encode(
+       vl.x().fieldT('Year').scale({zero :false}), 
+       vl.y().fieldQ('Global_Sales').scale({zero : false})
+    )
   // export const SalePerYear = vl
 const run = async () => {
     const data  =await (await genreGamePerYear()).filter(item=>{
          return item.Genre =='Action'
     });
-    console.log("🚀 ~ file: GenreGamePerYear.js ~ line 66 ~ run ~ data", data)
+    
+    const marksLineGlobalSale = ActionGameSaleGlobal
+    .data(data)
+  //   .width(window.innerWidth)
+    .width(500)
+    .height(300)
+    .autosize({ type: 'fit', contains: 'padding' })
+    .config(config);
+
     const marksLine  = ActionGamePerYearLine
       .data(data)
     //   .width(window.innerWidth)
-      .width(1000)
+      .width(500)
       .height(300)
       .autosize({ type: 'fit', contains: 'padding' })
       .config(config);
 
     const marksPoint = ActionGamePerYearPoint
        .data(data)
-       .width(1000)
+       .width(500)
        .height(300)
        .autosize({ type: 'fit', contains: 'padding' })
        .config(config);
 
     const d =document.getElementById("actionGamePerYear"); 
-    d.replaceWith(await vl.layer(marksLine,marksPoint).render(),d); 
+    d.replaceWith(await vl.hconcat( vl.layer(marksLine,marksPoint),marksLineGlobalSale).render(),d); 
   };
     
   run(); 
