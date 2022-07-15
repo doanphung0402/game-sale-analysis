@@ -28,7 +28,7 @@
   };
 
   // const csvUrl = 'https://gist.githubusercontent.com/evarun22/39d2fdb26f358c0171aa87b989b4d816/raw/e52963e5791313311781b8e42e4623280d6d1754/vgsales.csv';
-   const csvUrl ='https://gist.githubusercontent.com/doanphung0402/42b93451cd07d87ba113961b44b7d13f/raw/33795356a4b012bfb118e1b3e703dc0aa4707c07/game-sale-analysis-data.csv'; 
+   const csvUrl ='https://gist.githubusercontent.com/doanphung0402/42b93451cd07d87ba113961b44b7d13f/raw/71a5eed9a2cc3782d3fc2b6c65299828c2b21f34/game-sale-analysis-data.csv'; 
 
   const getData = async () => {
     const data = await d3.csv(csvUrl);
@@ -180,6 +180,7 @@
                PublisherSale.push({
                      "EU_Sales" : data1.EU_Sales, 
                      "JP_Sales" : data1.JP_Sales, 
+                     "NA_Sales" : data1.NA_Sales, 
                     "Publisher" : data1.Publisher, 
                     "Global_Sales": formatGlobalSale(data1.Global_Sales), 
                     "Year" : data1.Year
@@ -491,8 +492,8 @@
   const SaleGameNitendo  = vl__default["default"]
     .markLine()
     .encode(
-      vl__default["default"].x().fieldT('Year').scale({ zero: false }).title(null),
-      vl__default["default"].y().fieldQ('Global_Sales').scale({ zero: false })
+      vl__default["default"].x().fieldT('Year').scale({ zero: false }).title("Các thị trường khác "),
+      vl__default["default"].y().fieldQ('NA_Sales').scale({ zero: false })
     );
     const SaleJpNitendo = vl__default["default"]
     .markLine()
@@ -503,7 +504,7 @@
     const SaleEuNitendo = vl__default["default"]
     .markLine()
     .encode(
-      vl__default["default"].x().fieldT('Year').scale({ zero: false }).title(null),
+      vl__default["default"].x().fieldT('Year').scale({ zero: false }).title("Thị trường Châu Âu"),
       vl__default["default"].y().fieldQ('EU_Sales').scale({ zero: false })
     );
   const run$4 = async () => {
@@ -536,7 +537,7 @@
         .config(config);
       
       let d = document.getElementById("SaleGameNitendo"); 
-      d.replaceWith(await vl__default["default"].hconcat(marksSaleGlobal,marksSaleEu,marksSaleJp).render(),d); 
+      d.replaceWith(await vl__default["default"].hconcat(marksSaleEu,marksSaleJp,marksSaleGlobal).render(),d); 
     };
       
     run$4();

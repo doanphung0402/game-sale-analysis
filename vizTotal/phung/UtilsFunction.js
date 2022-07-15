@@ -71,9 +71,10 @@ export const totalGlobalSalesPublisherPerYear = async()=>{
              PublisherSale.push({
                    "EU_Sales" : data1.EU_Sales, 
                    "JP_Sales" : data1.JP_Sales, 
+                   "NA_Sales" : data1.NA_Sales, 
                   "Publisher" : data1.Publisher, 
                   "Global_Sales": formatGlobalSale(data1.Global_Sales), 
-                  "Year" : data1.Year
+                  "Year" : data1.Year 
              }); 
 
         }

@@ -19,8 +19,8 @@ import * as UtilsFunction from './UtilsFunction'
 export const SaleGameNitendo  = vl
   .markLine()
   .encode(
-    vl.x().fieldT('Year').scale({ zero: false }).title(null),
-    vl.y().fieldQ('Global_Sales').scale({ zero: false })
+    vl.x().fieldT('Year').scale({ zero: false }).title("Các thị trường khác "),
+    vl.y().fieldQ('NA_Sales').scale({ zero: false })
   );
   const SaleJpNitendo = vl
   .markLine()
@@ -31,7 +31,7 @@ export const SaleGameNitendo  = vl
   const SaleEuNitendo = vl
   .markLine()
   .encode(
-    vl.x().fieldT('Year').scale({ zero: false }).title(null),
+    vl.x().fieldT('Year').scale({ zero: false }).title("Thị trường Châu Âu"),
     vl.y().fieldQ('EU_Sales').scale({ zero: false })
   );
 const run = async () => {
@@ -64,7 +64,7 @@ const run = async () => {
       .config(config);
     
     let d = document.getElementById("SaleGameNitendo"); 
-    d.replaceWith(await vl.hconcat(marksSaleGlobal,marksSaleEu,marksSaleJp).render(),d); 
+    d.replaceWith(await vl.hconcat(marksSaleEu,marksSaleJp,marksSaleGlobal).render(),d); 
   };
     
   run(); 
