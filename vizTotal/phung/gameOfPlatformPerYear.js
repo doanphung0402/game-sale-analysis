@@ -84,7 +84,7 @@ export const gameOfPlatformPerYear  = vl
   .markLine()
   .encode(
     vl.x().fieldT('Year').scale({ zero: false }).title(null),
-    vl.y().fieldQ('number_game').scale({ zero: false }).title("game number"), 
+    vl.y().fieldQ('number_game').scale({ zero: false }).title("number game"), 
     vl.color().fieldN('Platform_name').title("platform"), 
     // vl.opacity().if(selection, vl.value(0.75)).value(0.05)
     vl.tooltip(["Platform_name"])
@@ -93,13 +93,13 @@ export const gameOfPlatformPerYear  = vl
 const run = async () => {
 
     const data1  = await getNumberGameOfPlatformPerYear(); 
-    console.log("🚀 ~ file: gameOfPlatformPerYear.js ~ line 93 ~ run ~ data1", data1)
+
     const data2 =  numberGameOf5Platform(data1); 
-    console.log("🚀 ~ file: gameOfPlatformPerYear.js ~ line 96 ~ run ~ data2", data2)
+
     const data = data1.filter(item=>{
         return data2.includes(item.Platform_name)
     })
-    console.log("🚀 ~ file: gameOfPlatformPerYear.js ~ line 100 ~ run ~ data", data)
+   
     const marks = gameOfPlatformPerYear
       .data(data)
       // .width(window.innerWidth)

@@ -24,7 +24,7 @@ export const gameLaunchedPerYearLine  = vl
   .markLine()
   .encode(
     vl.x().fieldT('Year').scale({ zero: false }).title(null),
-    vl.y().fieldQ('number_game').scale({ zero: false }), 
+    vl.y().fieldQ('number_game').scale({ zero: false }).title("number game"), 
   );
 const gameLaunchedPerYearPoint = vl
    .markPoint()

@@ -33,8 +33,6 @@
   const getData = async () => {
     const data = await d3.csv(csvUrl);
     console.log("🚀 ~ file: getData.js ~ line 8 ~ getData ~ data", data[0]);
-    
-    // Have a look at the attributes available in the console!
     return data;
   };
 
@@ -73,7 +71,7 @@
     .markLine()
     .encode(
       vl__default["default"].x().fieldT('Year').scale({ zero: false}).title(null),
-      vl__default["default"].y().fieldQ('Global_Sales').scale({ zero: false })
+      vl__default["default"].y().fieldQ('Global_Sales').scale({ zero: false }).title("Global Sales")
 
       // vl.color().fieldQ('Global_Sales').scale({zero :false})
       // vl.tooltip().fieldN('Genre')
@@ -86,7 +84,7 @@
       vl__default["default"].tooltip(['Global_Sales'])
     );
     // export const SalePerYear = vl
-  const run$9 = async () => {
+  const run$b = async () => {
       const data  = await totalOtherSales(); 
       const marksLine  = SalePerYearLine
         .data(data)
@@ -107,9 +105,9 @@
       d.replaceWith(await vl__default["default"].layer(marksLine, marksPoint).render(),d); 
     };
       
-    run$9();
+    run$b();
 
-  const formatGlobalSale = (Global_Sales) =>{ 
+  const formatGlobalSale$1 = (Global_Sales) =>{ 
       const pos = Global_Sales.indexOf("\t"); 
       if(pos==-1){
            return Global_Sales; 
@@ -130,7 +128,7 @@
       
       return flag ; 
   };
-  const findPublisherForYear = (publisherName,PublisherSale,Year) =>{
+  const findPublisherForYear$1 = (publisherName,PublisherSale,Year) =>{
       let flag = -1 ; 
       if(PublisherSale.length ==0){
            return -1 ; 
@@ -155,7 +153,7 @@
           }else {
                PublisherSale.push({
                     "Publisher" : data1.Publisher, 
-                    "Global_Sales":parseFloat(formatGlobalSale(data1.Global_Sales)).toFixed(2) 
+                    "Global_Sales":parseFloat(formatGlobalSale$1(data1.Global_Sales)).toFixed(2) 
                }); 
 
           }
@@ -168,22 +166,22 @@
         
   };
   //tong doanh thu cac nha phat trien qua  cac nam 
-  const totalGlobalSalesPublisherPerYear = async()=>{
+  const totalGlobalSalesPublisherPerYear$1 = async()=>{
       const data = await getData(); 
       let PublisherSale =[]; 
       data.forEach(data1=>{
-          let resFind = findPublisherForYear(data1.Publisher,PublisherSale,data1.Year) ; 
+          let resFind = findPublisherForYear$1(data1.Publisher,PublisherSale,data1.Year) ; 
           if(resFind != -1){
               PublisherSale[resFind].Global_Sales =(Number(PublisherSale[resFind].Global_Sales)+
                 Number(data1.Global_Sales)).toString(); 
           }else {
                PublisherSale.push({
-                     "EU_Sales" : data1.EU_Sales, 
-                     "JP_Sales" : data1.JP_Sales, 
-                     "NA_Sales" : data1.NA_Sales, 
-                    "Publisher" : data1.Publisher, 
-                    "Global_Sales": formatGlobalSale(data1.Global_Sales), 
-                    "Year" : data1.Year
+                      "EU_Sales" : data1.EU_Sales, 
+                      "JP_Sales" : data1.JP_Sales, 
+                      "NA_Sales" : data1.NA_Sales, 
+                      "Publisher" : data1.Publisher, 
+                      "Global_Sales": formatGlobalSale$1(data1.Global_Sales), 
+                      "Year" : data1.Year 
                }); 
 
           }
@@ -192,7 +190,7 @@
   };
   //doanh thu cua top 5 publisher qua cac nam 
   const topPublisherBestSaleGlobalPerYear = async(top) =>{
-       const data = await totalGlobalSalesPublisherPerYear(); 
+       const data = await totalGlobalSalesPublisherPerYear$1(); 
        await totalPublisherGlobalSale();
        const topPublisherBestSaleGlobal = await (await totalPublisherGlobalSale()).slice(0,top).map(item=>{
            return item.Publisher ; 
@@ -209,12 +207,12 @@
     .markLine()
     .encode(
       vl__default["default"].x().fieldT('Year').scale({ zero: false }).title(null),
-      vl__default["default"].y().fieldQ('Global_Sales').scale({ zero: false }), 
+      vl__default["default"].y().fieldQ('Global_Sales').scale({ zero: false }).title("Global Sales"), 
       vl__default["default"].color().fieldN('Publisher'), 
       vl__default["default"].tooltip(['Publisher'])
     );
     
-  const run$8 = async () => {
+  const run$a = async () => {
       const data  = await topPublisherBestSaleGlobalPerYear(5);
       const marks = PublisherSale
         .data(data)
@@ -229,7 +227,7 @@
       d.replaceWith(await marks.render(),d); 
     };
       
-    run$8();
+    run$a();
 
   const gameLaunchedPerYear = async() =>{
        const data = await getData(); 
@@ -252,7 +250,7 @@
     .markLine()
     .encode(
       vl__default["default"].x().fieldT('Year').scale({ zero: false }).title(null),
-      vl__default["default"].y().fieldQ('number_game').scale({ zero: false }), 
+      vl__default["default"].y().fieldQ('number_game').scale({ zero: false }).title("number game"), 
     );
   const gameLaunchedPerYearPoint = vl__default["default"]
      .markPoint()
@@ -261,7 +259,7 @@
       vl__default["default"].y().fieldQ('number_game').scale({ zero: false }), 
       vl__default["default"].tooltip(['number_game'])
      );
-  const run$7 = async () => {
+  const run$9 = async () => {
       const data  = await gameLaunchedPerYear();
       const marksLine  = gameLaunchedPerYearLine
         .data(data)
@@ -282,7 +280,7 @@
       d.replaceWith(await vl__default["default"].layer(marksLine,markPoint).render(),d); 
     };
       
-    run$7();
+    run$9();
 
   const getSaleJapanPerYear = async()=> { 
        const data =await getData();
@@ -335,7 +333,7 @@
       vl__default["default"].x().fieldT('Year').scale({ zero: false }).title("Thị trường Châu Âu"),
       vl__default["default"].y().fieldQ('Sale').scale({ zero: false }).title("million dollar")
      ); 
-  const run$6 = async () => { 
+  const run$8 = async () => { 
       const dataJp  = await getSaleJapanPerYear(); 
       const dataEu = await getSaleEuPerYear();
     
@@ -362,7 +360,7 @@
       d.replaceWith(await vl__default["default"].hconcat(marksJp,markEu).render(),d); 
     };
       
-    run$6();
+    run$8();
 
   const findPlatform =(flatformName,flatformArr,Year) =>{
       let pos =-1;  
@@ -445,22 +443,22 @@
     .markLine()
     .encode(
       vl__default["default"].x().fieldT('Year').scale({ zero: false }).title(null),
-      vl__default["default"].y().fieldQ('number_game').scale({ zero: false }).title("game number"), 
+      vl__default["default"].y().fieldQ('number_game').scale({ zero: false }).title("number game"), 
       vl__default["default"].color().fieldN('Platform_name').title("platform"), 
       // vl.opacity().if(selection, vl.value(0.75)).value(0.05)
       vl__default["default"].tooltip(["Platform_name"])
     );
     
-  const run$5 = async () => {
+  const run$7 = async () => {
 
       const data1  = await getNumberGameOfPlatformPerYear(); 
-      console.log("🚀 ~ file: gameOfPlatformPerYear.js ~ line 93 ~ run ~ data1", data1);
+
       const data2 =  numberGameOf5Platform(data1); 
-      console.log("🚀 ~ file: gameOfPlatformPerYear.js ~ line 96 ~ run ~ data2", data2);
+
       const data = data1.filter(item=>{
           return data2.includes(item.Platform_name)
       });
-      console.log("🚀 ~ file: gameOfPlatformPerYear.js ~ line 100 ~ run ~ data", data);
+     
       const marks = gameOfPlatformPerYear
         .data(data)
         // .width(window.innerWidth)
@@ -474,7 +472,7 @@
       d.replaceWith(await marks.render(),d); 
     };
       
-    run$5();
+    run$7();
 
   // const findPf = (Year,SaleGameInDSArr) =>{
   //      let pos = -1 ; 
@@ -507,9 +505,8 @@
       vl__default["default"].x().fieldT('Year').scale({ zero: false }).title("Thị trường Châu Âu"),
       vl__default["default"].y().fieldQ('EU_Sales').scale({ zero: false })
     );
-  const run$4 = async () => {
+  const run$6 = async () => {
       const data  = await topPublisherBestSaleGlobalPerYear(1);
-      console.log("🚀 ~ file: SaleGameNitendo.js ~ line 28 ~ run ~ data", data);
       const marksSaleEu = SaleEuNitendo
       .data(data)
       // .width(window.innerWidth)
@@ -540,9 +537,9 @@
       d.replaceWith(await vl__default["default"].hconcat(marksSaleEu,marksSaleJp,marksSaleGlobal).render(),d); 
     };
       
-    run$4();
+    run$6();
 
-  const findGame$2 =(genre,Year,genreGame)=>{ 
+  const findGame$3 =(genre,Year,genreGame)=>{ 
         let pos = -1 ; 
         if(genreGame.length ==0 ){
           return pos ; 
@@ -560,7 +557,7 @@
       let genreGame =[]; 
       
           data.forEach(item=>{
-              let pos = findGame$2(item.Genre,item.Year,genreGame); 
+              let pos = findGame$3(item.Genre,item.Year,genreGame); 
               if(pos ==-1){
                    genreGame.push({
                        'Genre' : item.Genre , 
@@ -596,11 +593,11 @@
     .markPoint()
     .encode(
       vl__default["default"].x().fieldT('Year').scale({ zero: false}).title(null),
-      vl__default["default"].y().fieldQ('game_number').scale({ zero: false }), 
+      vl__default["default"].y().fieldQ('game_number').scale({ zero: false }).title("number game"), 
       vl__default["default"].tooltip(['game_number'])
     );
     // export const SalePerYear = vl
-  const run$3 = async () => {
+  const run$5 = async () => {
       const data  =await genreGamePerYear$1();
       const marksLine  = genreGamePerYearLine
         .data(data)
@@ -621,9 +618,9 @@
       d.replaceWith(await vl__default["default"].layer(marksLine).render(),d); 
     };
       
-    run$3();
+    run$5();
 
-  const findGame$1 =(genre,Year,genreGame)=>{ 
+  const findGame$2 =(genre,Year,genreGame)=>{ 
         let pos = -1 ; 
         if(genreGame.length ==0 ){
           return pos ; 
@@ -643,16 +640,16 @@
      
          
           data.forEach(item=>{
-              let pos = findGame$1(item.Genre,item.Year,genreGame); 
+              let pos = findGame$2(item.Genre,item.Year,genreGame); 
               if(pos ==-1){
                    genreGame.push({
                        'Genre' : item.Genre, 
                        'Year' :item.Year, 
                        'game_number' : '1', 
-                       'Global_Sales': formatGlobalSale(item.Global_Sales)
+                       'Global_Sales': formatGlobalSale$1(item.Global_Sales)
                    });
               }else {
-                let Global_Sales =  Number(genreGame[pos].Global_Sales) + Number(formatGlobalSale(item.Global_Sales)); 
+                let Global_Sales =  Number(genreGame[pos].Global_Sales) + Number(formatGlobalSale$1(item.Global_Sales)); 
                    genreGame[pos] = {
                        ...genreGame[pos], 
                           'game_number' : (Number(genreGame[pos].game_number)+1).toString(), 
@@ -680,7 +677,7 @@
     .markPoint()
     .encode(
       vl__default["default"].x().fieldT('Year').scale({ zero: false}).title(null),
-      vl__default["default"].y().fieldQ('game_number').scale({ zero: false }), 
+      vl__default["default"].y().fieldQ('game_number').scale({ zero: false }).title("number game"), 
       vl__default["default"].tooltip(['game_number'])
     );
     const ActionGameSaleGlobal = vl__default["default"]
@@ -690,7 +687,7 @@
          vl__default["default"].y().fieldQ('Global_Sales').scale({zero : false})
       );
     // export const SalePerYear = vl
-  const run$2 = async () => {
+  const run$4 = async () => {
       const data  =await (await genreGamePerYear()).filter(item=>{
            return item.Genre =='Action'
       });
@@ -720,6 +717,159 @@
 
       const d =document.getElementById("actionGamePerYear"); 
       d.replaceWith(await vl__default["default"].hconcat( vl__default["default"].layer(marksLine,marksPoint),marksLineGlobalSale).render(),d); 
+    };
+      
+    run$4();
+
+  const findGame$1= (publisher_name,Year,gameOfPubArr)=>{
+      let pos =-1; 
+      if(gameOfPubArr.length==0){
+           return pos ; 
+      }else {
+           gameOfPubArr.forEach((item,index)=>{
+               if (item.Publisher == publisher_name && Year==item.Year){
+                   pos = index ; 
+               }
+           });
+      }
+       return pos ; 
+  };
+
+  const getGameOfPublisher$1 = async()=>{
+      const data = await getData(); 
+      let newData =[]; 
+      
+      data.forEach(item=>{
+          let pos = findGame$1(item.Publisher,item.Year,newData) ; 
+          if(pos ==-1){
+               newData.push({
+                  'Publisher' : item.Publisher , 
+                  'Year' : item.Year, 
+                  'game_number' : '1' 
+               });
+          }else {
+               newData[pos] = {
+                   ...newData[pos], 
+                   'game_number': (Number(newData[pos].game_number)+1).toString()
+               };
+          }
+      });
+      return newData ; 
+     
+
+  };
+
+
+  const gameOfPublisherPerYearLine$1 = vl__default["default"]
+    .markLine()
+    .encode(
+      vl__default["default"].x().fieldT('Year').scale({ zero: false}).title(null),
+      vl__default["default"].y().fieldQ('game_number').scale({ zero: false }), 
+
+      vl__default["default"].color().fieldN('Publisher').scale({zero :false})
+      // vl.tooltip().fieldN('Genre')
+    );
+
+    // export const SalePerYear = vl
+  const run$3 = async () => {
+      const data  = await (await getGameOfPublisher$1()).filter(item=>{
+          let Pub = item.Publisher ; 
+           if(Pub=="Activision" || Pub=="Electronic Arts"||Pub=="Ubisoft" || Pub =="Namco Bandai Games" || Pub =="Konami Digital Entertainment" || Pub=="Nintendo"){
+             if(item.Year <= 2020){
+               return true ; 
+             }
+           }
+      }); 
+      const marksLine  = gameOfPublisherPerYearLine$1
+        .data(data)
+      //   .width(window.innerWidth)
+        .width(1000)
+        .height(300)
+        .autosize({ type: 'fit', contains: 'padding' })
+        .config(config);
+
+      const d =document.getElementById("gameOfPublisherPerYear"); 
+      d.replaceWith(await vl__default["default"].layer(marksLine).render(),d); 
+    };
+      
+    run$3();
+
+  const getNASale = async()=> { 
+       const data =await getData();
+       let saleGameJp = []; 
+      for (let k =1983;k<2018;k++){
+          let totalSaleInYear = 0; 
+          data.forEach(item => {
+               if(item.Year == k){
+                   totalSaleInYear += Number(item.NA_Sales); 
+               }
+          });
+          saleGameJp.push({
+               'Year' : k.toString(), 
+               'Sale' : totalSaleInYear.toString()
+          });
+         
+      }
+      return saleGameJp ; 
+        
+      };
+      const getOtherSalePerYear = async()=> { 
+        const data =await getData();
+        let saleGameEu = []; 
+       for (let k =1983;k<2018;k++){
+           let totalSaleInYear = 0; 
+           data.forEach(item => {
+                if(item.Year == k){
+                    totalSaleInYear += Number(item.Other_Sales); 
+                }
+           });
+           saleGameEu.push({
+                'Year' : k.toString(), 
+                'Sale' : totalSaleInYear.toString()
+           });
+          
+       }
+       return saleGameEu ;
+       };
+
+  const SaleNAPerYear = vl__default["default"]
+    .markLine()
+    .encode(
+      vl__default["default"].x().fieldT('Year').scale({ zero: false }).title("Thị trường Bắc Mỹ "),
+      vl__default["default"].y().fieldQ('Sale').scale({ zero: false }).title("million dollar")
+    );
+
+  const SaleOtherPerYear = vl__default["default"]
+    .markLine()
+     .encode(
+      vl__default["default"].x().fieldT('Year').scale({ zero: false }).title("Các thị trường khác "),
+      vl__default["default"].y().fieldQ('Sale').scale({ zero: false }).title("million dollar")
+     ); 
+  const run$2 = async () => { 
+      const dataNA  = await getNASale(); 
+      const dataOther = await getOtherSalePerYear();
+    
+      const marksNA = SaleNAPerYear
+      .data(dataNA)
+        // .width(window.innerWidth)
+        
+        .width(600)
+        .height(300)
+        .autosize({ type: 'fit', contains: 'padding' })
+        .config(config);
+      
+        const markOther = SaleOtherPerYear
+        .data(dataOther)
+          // .width(window.innerWidth)
+          
+          .width(600)
+          .height(300)
+          .autosize({ type: 'fit', contains: 'padding' })
+          .config(config);
+
+
+      let d = document.getElementById("SaleNaAndOtherPerYear"); 
+      d.replaceWith(await vl__default["default"].hconcat(marksNA,markOther).render(),d); 
     };
       
     run$2();
@@ -777,13 +927,12 @@
   const run$1 = async () => {
       const data  = await (await getGameOfPublisher()).filter(item=>{
           let Pub = item.Publisher ; 
-           if(Pub=="Activision" || Pub=="Electronic Arts"||Pub=="Ubisoft" || Pub =="Namco Bandai Games" || Pub =="Konami Digital Entertainment"){
+           if(Pub=="Electronic Arts"||  Pub=="Nintendo"){
              if(item.Year <= 2020){
                return true ; 
              }
            }
       }); 
-      console.log("🚀 ~ file: gameOfPublisherPerYear.js ~ line 57 ~ run ~ data", data);
       const marksLine  = gameOfPublisherPerYearLine
         .data(data)
       //   .width(window.innerWidth)
@@ -792,88 +941,79 @@
         .autosize({ type: 'fit', contains: 'padding' })
         .config(config);
 
-      const d =document.getElementById("gameOfPublisherPerYear"); 
+      const d =document.getElementById("ElectronicAndNitendoGameNumber"); 
       d.replaceWith(await vl__default["default"].layer(marksLine).render(),d); 
     };
       
     run$1();
 
-  const getNASale = async()=> { 
-       const data =await getData();
-       let saleGameJp = []; 
-      for (let k =1983;k<2018;k++){
-          let totalSaleInYear = 0; 
-          data.forEach(item => {
-               if(item.Year == k){
-                   totalSaleInYear += Number(item.NA_Sales); 
-               }
-          });
-          saleGameJp.push({
-               'Year' : k.toString(), 
-               'Sale' : totalSaleInYear.toString()
-          });
-         
+  const findPublisherForYear = (publisherName,PublisherSale,Year) =>{
+      let flag = -1 ; 
+      if(PublisherSale.length ==0){
+           return -1 ; 
       }
-      return saleGameJp ; 
-        
-      };
-      const getOtherSalePerYear = async()=> { 
-        const data =await getData();
-        let saleGameEu = []; 
-       for (let k =1983;k<2018;k++){
-           let totalSaleInYear = 0; 
-           data.forEach(item => {
-                if(item.Year == k){
-                    totalSaleInYear += Number(item.Other_Sales); 
-                }
-           });
-           saleGameEu.push({
-                'Year' : k.toString(), 
-                'Sale' : totalSaleInYear.toString()
-           });
-          
-       }
-       return saleGameEu ;
-       };
+      PublisherSale.forEach((publisher,index)=>{
+          if(publisher.Publisher == publisherName && publisher.Year == Year){
+               flag =  index ; 
+          }
+      });
+      
+      return flag ; 
+  };
+  const formatGlobalSale = (Global_Sales) =>{ 
+      const pos = Global_Sales.indexOf("\t"); 
+      if(pos==-1){
+           return Global_Sales; 
+      }else {
+           return Global_Sales.slice(0,pos); 
+      }
+  };
+  const totalGlobalSalesPublisherPerYear = async()=>{
+      const data = await getData(); 
+      let PublisherSale =[]; 
+      data.forEach(data1=>{
+          let resFind = findPublisherForYear(data1.Publisher,PublisherSale,data1.Year) ; 
+          if(resFind != -1){
+              PublisherSale[resFind].Global_Sales =(Number(PublisherSale[resFind].Global_Sales)+
+                Number(data1.Global_Sales)).toString(); 
+          }else {
+               PublisherSale.push({
+                      "EU_Sales" : data1.EU_Sales, 
+                      "JP_Sales" : data1.JP_Sales, 
+                      "NA_Sales" : data1.NA_Sales, 
+                      "Publisher" : data1.Publisher, 
+                      "Global_Sales": formatGlobalSale(data1.Global_Sales), 
+                      "Year" : data1.Year 
+               }); 
 
-  const SaleNAPerYear = vl__default["default"]
+          }
+      }); 
+          return PublisherSale ; 
+  };
+  const SaleGame  = vl__default["default"]
     .markLine()
     .encode(
-      vl__default["default"].x().fieldT('Year').scale({ zero: false }).title("Thị trường Bắc Mỹ "),
-      vl__default["default"].y().fieldQ('Sale').scale({ zero: false }).title("million dollar")
+      vl__default["default"].x().fieldT('Year').scale({ zero: false }),
+      vl__default["default"].y().fieldQ('Global_Sales').scale({ zero: false }).title("Global Sales"),
+      vl__default["default"].color().fieldN('Publisher').scale({zero :false})
     );
 
-  const SaleOtherPerYear = vl__default["default"]
-    .markLine()
-     .encode(
-      vl__default["default"].x().fieldT('Year').scale({ zero: false }).title("Các thị trường khác "),
-      vl__default["default"].y().fieldQ('Sale').scale({ zero: false }).title("million dollar")
-     ); 
-  const run = async () => { 
-      const dataNA  = await getNASale(); 
-      const dataOther = await getOtherSalePerYear();
-    
-      const marksNA = SaleNAPerYear
-      .data(dataNA)
-        // .width(window.innerWidth)
-        
-        .width(600)
-        .height(300)
-        .autosize({ type: 'fit', contains: 'padding' })
-        .config(config);
+  const run = async () => {
+      const data1 =await (await totalGlobalSalesPublisherPerYear()).filter(item=>{
+           return (item.Publisher == "Electronic Arts" || item.Publisher =="Nintendo"); 
+      }); 
+
+      const marksSale = SaleGame
+      .data(data1)
+      // .width(window.innerWidth)
       
-        const markOther = SaleOtherPerYear
-        .data(dataOther)
-          // .width(window.innerWidth)
-          
-          .width(600)
-          .height(300)
-          .autosize({ type: 'fit', contains: 'padding' })
-          .config(config);
-
-
-      let d = document.getElementById("SaleNaAndOtherPerYear"); 
-      d.replaceWith(await vl__default["default"].hconcat(marksNA,markOther).render(),d); 
+      .width(1000)
+      .height(300)
+      .autosize({ type: 'fit', contains: 'padding' })
+      .config(config);
+      
+      let d = document.getElementById("ElectronicAndNitendoSale"); 
+      d.replaceWith(await vl__default["default"].layer(marksSale).render(),d); 
     };
       
     run();

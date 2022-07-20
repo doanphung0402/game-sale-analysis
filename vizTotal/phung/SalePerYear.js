@@ -29,7 +29,7 @@ export const SalePerYearLine = vl
   .markLine()
   .encode(
     vl.x().fieldT('Year').scale({ zero: false}).title(null),
-    vl.y().fieldQ('Global_Sales').scale({ zero: false })
+    vl.y().fieldQ('Global_Sales').scale({ zero: false }).title("Global Sales")
 
     // vl.color().fieldQ('Global_Sales').scale({zero :false})
     // vl.tooltip().fieldN('Genre')

@@ -55,7 +55,7 @@ export const gameOfPublisherPerYearLine = vl
 const run = async () => {
     const data  = await (await getGameOfPublisher()).filter(item=>{
         let Pub = item.Publisher ; 
-         if(Pub=="Activision" || Pub=="Electronic Arts"||Pub=="Ubisoft" || Pub =="Namco Bandai Games" || Pub =="Konami Digital Entertainment" || Pub=="Nintendo"){
+         if(Pub=="Electronic Arts"||  Pub=="Nintendo"){
            if(item.Year <= 2020){
              return true ; 
            }
@@ -69,7 +69,7 @@ const run = async () => {
       .autosize({ type: 'fit', contains: 'padding' })
       .config(config);
 
-    const d =document.getElementById("gameOfPublisherPerYear"); 
+    const d =document.getElementById("ElectronicAndNitendoGameNumber"); 
     d.replaceWith(await vl.layer(marksLine).render(),d); 
   };
     

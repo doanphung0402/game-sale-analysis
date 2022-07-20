@@ -41,6 +41,9 @@ import {gameOfPublisherPerYearLine} from './vizTotal/phung/gameOfPublisherPerYea
 //doanh thu NA và cac khu vực khác 
 import {SaleGameOtherArea} from './vizTotal/phung/SaleGameOtherAreaPerYear'
 
+import {ElectronicAndNitendoGameNumber} from './vizTotal/phung/ElectronicAndNitendoNumberGame'; 
+
+import {ElectronicAndNitendoSale} from './vizTotal/phung/ElectronicAndNintendoSale'; 
 vl.register(vega, vegaLite, {
   view: { renderer: 'svg' },
   init: view => { view.tooltip(new Handler().call); }

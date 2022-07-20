@@ -36,7 +36,6 @@ export const SaleGameNitendo  = vl
   );
 const run = async () => {
     const data  = await UtilsFunction.topPublisherBestSaleGlobalPerYear(1);
-    console.log("🚀 ~ file: SaleGameNitendo.js ~ line 28 ~ run ~ data", data)
     const marksSaleEu = SaleEuNitendo
     .data(data)
     // .width(window.innerWidth)

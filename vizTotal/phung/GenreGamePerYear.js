@@ -56,7 +56,7 @@ export const genreGamePerYearPoint = vl
   .markPoint()
   .encode(
     vl.x().fieldT('Year').scale({ zero: false}).title(null),
-    vl.y().fieldQ('game_number').scale({ zero: false }), 
+    vl.y().fieldQ('game_number').scale({ zero: false }).title("number game"), 
     vl.tooltip(['game_number'])
   )
   // export const SalePerYear = vl
